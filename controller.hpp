@@ -33,6 +33,8 @@ private:
     string m_floor;
     string m_room;
     string m_config;
+    
+    //BlockQueue<Event> m_eventQueue?
 };
 
 }// namespace iot
