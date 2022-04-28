@@ -5,17 +5,28 @@
 #include <time.h>
 #include <string>
 
+template <typename T>
 class Sensor{
 public:
-    Sensor();
+    Sensor(T& a_communicationObject);
     virtual int measure(); // = 0?!
-    virtual void sendCurrent(); //parameter(s)??
+    virtual void sendCurrent(Event&); //parameter(s)??
 
     //event - is it a state where 
 // private:
 //     int m_measurement;
        // int m_socket;
+protected:
+    Location m_location;
+    std::string m_type; //string or enum?
+    T& m_communicationObject;
 };
+
+template <typename T>
+void Sensor::sendCurrent(Event& a_event)
+{
+    m_communicationObject.send(a_event);
+}
 
 class TempSensor : public Sensor {
 public:
