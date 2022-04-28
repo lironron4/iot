@@ -3,51 +3,52 @@
 
 //created by sensor
 //server gets buffer with event in it - turned back into event class
+
 class Event {
 public:
     Event();
-private:
+    ~Event();
+protected:
     time_t m_timeStamp;
     std::string m_eventType;
-    std::string m_location;
+    std::string m_location; //class Location??
+//private:
+    //cctor ?
+    //operator= ?
 };
+
 //how to put into log? 
 
 
-class Event{
+class Temperature : public Event{
 public:
-    Event(int a_detection);
-// private:
-//     Room m_location;
-//     //floor?
-//     EventMap m_eventType;
-//     //time?
+    Temperature(double a_detection, bool isRising);
+private:
+    double m_currTemp;
 }; 
+
+//create rand temp simulator; 
 
 class Fire : public Event{
 public:
-    Fire(int a_detection);
-private:
-    Room m_location;
-    //floor?
-    EventMap m_eventType;
-    //time?
+    Fire();
 }; 
+
+class Smoke : public Event{
+public:
+    Smoke();
+}; 
+
 
 class Movement : public Event{
 public:
-    Movement(int a_detection);
-private:
-    Room m_location;
-    //floor?
-    EventMap m_eventType;
-    //time?
+    Movement();
 }; 
 
-class EventMap{ //KNOWS BUILDING - can go to certain location in building
-    //a map of key: event, value: func
-    //key: fire, // value: extinguish(event.m_location) >>> how is this done?? predicate function??
-};
+// class EventMap{ //KNOWS BUILDING - can go to certain location in building
+//     //a map of key: event, value: func
+//     //key: fire, // value: extinguish(event.m_location) >>> how is this done?? predicate function??
+// };
 
 //eventMap[event.m_eventType](event.m_location);
 
