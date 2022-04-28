@@ -15,7 +15,7 @@ class ControllerAgent : public Agent
 {
 public:
    //or std::pair<room, floor> ??
-   ControllerAgent(string a_id, string a_type, string a_floor, string a_room, string a_config );
+   ControllerAgent(string a_id, string a_type, string a_floor, string a_room, string a_config ); // vector<string> a_vec  
    virtual ~ControllerAgent() {};
    
     string id() const;
