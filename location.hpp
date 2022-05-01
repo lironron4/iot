@@ -1,6 +1,6 @@
 #pragma once
 
-#include "building_map.hpp" //how I know the valid values for location?
+//#include "building_map.hpp" //how I know the valid values for location?
 
 namespace smarthome
 {
@@ -8,14 +8,14 @@ namespace smarthome
 class Location
 {
 public:
-    Location(size_t a_floor, size_t a_roomNumber);
-    size_t floor() const;
-    size_t roomNumber() const;
-    Location& operator==(Location const& a_other);
+    Location(std::string const& a_floor, std::string const& a_roomNumber);
+    std::string floor() const;
+    std::string room() const;
+    bool operator==(Location const& a_other);
 
 private:
-    size_t m_floor;
-    size_t m_roomNumber;
+    std::string m_floor;
+    std::string m_room;
 };
 
 } //namespace smarthome

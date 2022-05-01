@@ -3,7 +3,7 @@
 namespace smarthome
 {
 
-Server::Server (std::ifstream& a_configuration, size_t a_threads)
+Server::Server (std::ifstream& a_configuration)
 {
     m_threads.reserve(a_threads);
     parseFile(a_configuration);
@@ -23,6 +23,7 @@ void Server::parseFile (std::ifstream& a_configuration)
             deviceDetails[i].erase(0, index+1);
         }
         m_controllers.push_back(new Controller(deviceDetails)); //should be shared ptr
+        ++m_numOfThreads; //assume every device has is own thread
     }
 }
 
@@ -43,30 +44,22 @@ void Server::parseFile (std::ifstream& a_configuration)
 
 void Server::run ()
 {   
-    //sensor should be on...
-    size_t threadsToGetFromSensor = m_numOfThreads/2; //maybe less
-    for(size_t i=0; i< threadsToGetFromSensor; ++i)
+    for(size_t i=0; i< m_sensors.size(); ++i)
     {
         threads[i] = std::thread(&Sensor::run, m_sensors);
         //for now every thread get one sensor to take care for
     }
 
-    for(size_t i=threadsToGetFromSensor; i< m_numOfThreads - threadsToGetFromSensor; ++i)
+    for(size_t i=m_sensors.size(); i< m_sensors.size() + m_controllers.size(); ++i)
     {
-        threads[i] = std::thread(&EventRouter::run, m_server);
+        threads[i] = std::thread(&Controller::run, m_router);
     }
 
-    m_router.run();
-
-    //get events from queue
-    while (true)
+    //for() - how much threads here? for now its one
     {
-        
-        if (!m_eventsQueue.isEmpty())
-        {
-            m_router.
-        }
+        threads[m_controllers.size()] = std::thread(&EventRouter::run, m_router);
     }
+
 }
 
 } //namespace smarthome
