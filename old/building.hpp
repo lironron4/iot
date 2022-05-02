@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "room.hpp"
+#include "room.hpp" 
 #include "device.hpp"
 
 namespace smarthome
