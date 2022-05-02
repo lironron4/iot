@@ -33,7 +33,7 @@ TempSensor::TempSensor(std::string a_location)
 }
 
 
-void TempSensor::run(mt::BlockQueue<std::shared_ptr<Event>> a_q){
+void TempSensor::run(mt::BlockingQueue<std::shared_ptr<Event>> a_q){
     while(true){   
         a_q.enqueue(std::shared_ptr<Event> (new Temperature(m_location, generateTemp())));
     }
@@ -46,7 +46,7 @@ MovementDetector::MovementDetector(std::string a_location)
 {}
 
 
-void MovementDetector::run(mt::BlockQueue<std::shared_ptr<Event>> a_q){
+void MovementDetector::run(mt::BlockingQueue<std::shared_ptr<Event>> a_q){
     while(true){
         if(rand() % 2){
             a_q.enqueue(std::shared_ptr<Event> (new Movement(m_location)));
@@ -63,7 +63,7 @@ SmokeDetector::SmokeDetector(std::string a_location)
 {}
 
 
-void SmokeDetector::run(mt::BlockQueue<std::shared_ptr<Event>> a_q){
+void SmokeDetector::run(mt::BlockingQueue<std::shared_ptr<Event>> a_q){
     while(true){
         if(rand() % 2){
             a_q.enqueue(std::shared_ptr<Event> (new Smoke(m_location)));
@@ -78,7 +78,7 @@ FireDetector::FireDetector(std::string a_location)
 {}
 
 
-void FireDetector::run(mt::BlockQueue<std::shared_ptr<Event>> a_q){
+void FireDetector::run(mt::BlockingQueue<std::shared_ptr<Event>> a_q){
     while(true){
         if(rand() % 2){
             a_q.enqueue(std::shared_ptr<Event> (new Fire(m_location)));
